@@ -22,7 +22,7 @@ class TLCD(object):
         self.kineticViscosity = configurations.kineticViscosity
         self.gravity = configurations.gravity
 
-        for (i, j) in kwargs.items():
+        for (i, j) in list(kwargs.items()):
             exec('self.{} = {}'.format(i, j))
 
         if self.type == 'Basic TLCD':

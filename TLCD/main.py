@@ -77,7 +77,7 @@ class RunSetOfSimulationsThread(QThread):
         self.damping = assemble_damping_matrix(self.inputData.stories, self.inputData.tlcd)
         self.stiffness = assemble_stiffness_matrix(self.inputData.stories, self.inputData.tlcd)
 
-        for i, j in zip(self.frequencies, range(len(self.frequencies))):
+        for i, j in zip(self.frequencies, list(range(len(self.frequencies)))):
             resp = self.simulation(self.inputData, i)
             x = resp[0]
             dmf = resp[1]
@@ -334,7 +334,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                   'actionNightMapping': './css/nightMapping/style.qss',
                   'actionWombat': './css/wombat/stylesheet.qss',
                   }
-        for i in themes.keys():
+        for i in list(themes.keys()):
             eval('self.{}.setChecked(False)'.format(i))
 
         eval('self.{}.setChecked(True)'.format(theme))
@@ -570,7 +570,7 @@ Preencha todos os dados e utilize o  comando "Calcular" para gerar o relatório.
             self.file.write('{}\n'.format(len(inputData.stories)))
 
             stories = {}
-            for i, j in inputData.stories.items():
+            for i, j in list(inputData.stories.items()):
                 stories.update({i: 'Story({}, {}, {}, {}, {}, "{}")'.format(j.mass, j.height, j.width,
                                                                             j.depth, j.E, j.support)})
             self.file.write('{}\n'.format(stories))
@@ -805,7 +805,7 @@ Preencha todos os dados e utilize o  comando "Calcular" para gerar o relatório.
                                                               inputData.tlcd)
 
             # Calculate the damping ratio of each story
-            for i in inputData.stories.values():
+            for i in list(inputData.stories.values()):
                 i.calc_damping_coefficient(inputData.configurations.dampingRatio)
 
             # Confirm excitation
@@ -849,14 +849,14 @@ Preencha todos os dados e utilize o  comando "Calcular" para gerar o relatório.
                                                               inputData.tlcd)
 
             # Calculate the damping ratio of each story
-            for i in inputData.stories.values():
+            for i in list(inputData.stories.values()):
                 i.calc_damping_coefficient(inputData.configurations.dampingRatio)
 
             # Confirm excitation
             self.add_excitation()
 
             naturalFrequencies = []
-            for i in inputData.stories.values():
+            for i in list(inputData.stories.values()):
                 naturalFrequencies.append(i.naturalFrequency)
 
             n = inputData.configurations.dmfDiscretizationPoints
@@ -1280,7 +1280,7 @@ Gravity acceleration: {} (m/s²)""".format(inputData.configurations.method, inpu
         """
         self.list1.clear()
 
-        for i in inputData.stories.keys():
+        for i in list(inputData.stories.keys()):
             self.list1.addItem('Story {}'.format(i))
 
         if inputData.tlcd is not None:
@@ -1355,7 +1355,7 @@ Gravity acceleration: {} (m/s²)""".format(inputData.configurations.method, inpu
         """
         self.list3.clear()
 
-        for i in inputData.stories.keys():
+        for i in list(inputData.stories.keys()):
             self.list3.addItem('Story {}'.format(i))
 
         if inputData.tlcd is not None:
@@ -1474,7 +1474,7 @@ def compare_anal_sol(case):
     elif case == 2:
         # Calculate the damping ratio of each story
         ksi = [0.02, 0.03, 0.044, 0.052]
-        for i, j in zip(inputData.stories.values(), ksi):
+        for i, j in zip(list(inputData.stories.values()), ksi):
             i.calc_damping_coefficient(j)
 
         mass = assemble_mass_matrix(inputData.stories, inputData.tlcd)

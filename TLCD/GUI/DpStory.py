@@ -23,7 +23,7 @@ class Story(object):
         self.support = support
         self.tlcd = tlcd
 
-        for (i, j) in kwargs.items():
+        for (i, j) in list(kwargs.items()):
             exec('self.{} = {}'.format(i, j))
 
         self.I = (self.width*self.depth**3)/12

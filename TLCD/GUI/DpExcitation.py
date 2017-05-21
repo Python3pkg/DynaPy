@@ -37,7 +37,7 @@ class Excitation(object):
             self.anlyDuration = t[-1]
             self.fileName = fileName
 
-        for (i, j) in kwargs.items():
+        for (i, j) in list(kwargs.items()):
             exec('self.{} = {}'.format(i, j))
 
     def calc_frequency(self):
